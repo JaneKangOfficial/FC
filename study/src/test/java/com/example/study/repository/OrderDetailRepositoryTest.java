@@ -1,5 +1,6 @@
 package com.example.study.repository;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.junit.Assert;
@@ -13,11 +14,11 @@ public class OrderDetailRepositoryTest extends StudyApplicationTests{
 
 	@Autowired
 	private OrderDetailRepository orderDetailRepository;
-	
-	@Test
-	public void create() {
 
 /*		
+	@Test
+	public void create() { 
+
 		OrderDetail orderDetail = new OrderDetail();
 		
 		orderDetail.setOrderAt(LocalDateTime.now());
@@ -30,8 +31,24 @@ public class OrderDetailRepositoryTest extends StudyApplicationTests{
 		
 		OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
 		Assert.assertNotNull(newOrderDetail);
+	}
 */
+	
+	@Test
+	public void create() {
+		OrderDetail orderDetail = new OrderDetail();
+		
+		orderDetail.setStatus("WAITING");
+		orderDetail.setArrivalDate(LocalDateTime.now().plusDays(2));
+		orderDetail.setQuantity(1);
+		orderDetail.setTotalPrice(BigDecimal.valueOf(900000));
+		orderDetail.setCreatedAt(LocalDateTime.now());
+		orderDetail.setCreatedBy("AdminServer");
+		orderDetail.setOrderGroupId(2L);	// 어떠한 장바구니에 
+		orderDetail.setItemId(1L);			// 어떠한 상품 
+		
+		OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
+		Assert.assertNotNull(newOrderDetail);
 		
 	}
-	
 }
