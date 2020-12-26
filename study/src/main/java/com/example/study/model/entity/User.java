@@ -30,9 +30,17 @@ public class User {
 	
 	private String account;
 	
+	private String password;
+	
+	private String status;
+	
 	private String email;
 	
 	private String phoneNumber;
+	
+	private LocalDateTime registeredAt;
+
+	private LocalDateTime unregisteredAt;
 	
 	private LocalDateTime createdAt;
 	
@@ -42,10 +50,11 @@ public class User {
 	
 	private String updatedBy;
 	
+/*
 	// 연관관계 설정 -> User : OrderDetail -> 1 : N 
 	// mappedBy = "user" 에서 user는 OrderDetail.java 의 변수명인 user 와 동일해야 함 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<OrderDetail> orderDetailList;
-	
+*/
 	
 }

@@ -1,5 +1,6 @@
 package com.example.study.repository;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.junit.Assert;
@@ -21,7 +22,7 @@ public class ItemRepositoryTest extends StudyApplicationTests{
 	private ItemRepository itemRepository;
 	
 	// 오류도 없는데 DB에 안 들어가면 JUnit 버전 확인할 것 
-	
+/*	
 //	@Test
 //	@Transactional
 	public void create() {
@@ -36,8 +37,29 @@ public class ItemRepositoryTest extends StudyApplicationTests{
 		System.out.println("newItem1 :" + newItem);
 		Assert.assertNotNull(newItem);
 	}
+*/
 	
 	@Test
+	public void create() {
+		Item item = new Item();
+		item.setStatus("UNREGISTERED");
+		item.setName("삼성 노트북");
+		item.setTitle("삼성 노트북 A100");
+		item.setContent("2020년형 노트북입니다.");
+		item.setPrice(900000);
+		item.setBrandName("삼성");
+		item.setRegisteredAt(LocalDateTime.now());
+		item.setCreatedAt(LocalDateTime.now());
+		item.setCreatedBy("Partner01");
+		item.setPartnerId(1L);
+		
+		Item newItem = itemRepository.save(item);
+		Assert.assertNotNull(newItem);
+		
+	}
+	
+	
+//	@Test
 	public void read() {
 		Long id = 1L;
 	

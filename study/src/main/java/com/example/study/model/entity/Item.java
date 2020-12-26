@@ -1,5 +1,6 @@
 package com.example.study.model.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -24,12 +25,37 @@ public class Item {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	private String status;
+	
 	private String name;
 	
-	private Integer price;
+	private String title;
 	
 	private String content;
+
+	private Integer price;
 	
+	private String brandName;
+	
+	private LocalDateTime registeredAt;
+
+	private LocalDateTime unregisteredAt;
+	
+	private LocalDateTime createdAt;
+	
+	private String createdBy;
+	
+	private LocalDateTime updatedAt;
+	
+	private String updatedBy;
+	
+	private Long partnerId;
+	
+	
+	
+	
+	
+	/*	
 	// 연관관계 설정 -> Item : OrderDetail -> 1 : N
 	// mappedBy = "item" 에서 item 은 OrderDetail.java 의 변수명인 item 과 동일해야함  
 	
@@ -44,6 +70,8 @@ public class Item {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
 	private List<OrderDetail> orderDetailList;
-
+*/
+	
+	
 }
 

@@ -10,7 +10,7 @@ import com.example.study.model.entity.User;
 @Repository
 // JpaRepository<TableName(Entity), FK type(id)>
 public interface UserRepository extends JpaRepository<User,  Long>{
-
+/*
 	// SELECT * FROM user WHERE account = ? << test03, test04
 	Optional<User> findByAccount(String account);
 
@@ -18,6 +18,9 @@ public interface UserRepository extends JpaRepository<User,  Long>{
 
 	// SELECT * FROM user WHERE account = ? and email = ?
 	Optional<User> findByAccountAndEmail(String account, String email);
+*/
 
-
+	User findFirstByPhoneNumberOrderByIdDesc(String phoneNumber);
+	
+	
 }

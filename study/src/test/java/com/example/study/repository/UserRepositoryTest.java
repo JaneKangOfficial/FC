@@ -26,6 +26,8 @@ public class UserRepositoryTest extends StudyApplicationTests{
 	
 	// error 발생 시 : build path -> add library -> junit4
 	// no tests found with test runner JUnit5 error 발생 시 : run configurations -> JUnit -> Test -> TestRunner를 Junit4로 변경
+
+/*
 //	@Test
 	public void create() {
 		// String sql = insert into user (%s, %s, %d) value (account, email, age);
@@ -40,9 +42,35 @@ public class UserRepositoryTest extends StudyApplicationTests{
 		//userRepository.save(user)에서 error는 userRepository가 null이라서 -> @RunWith(SpringRunner.class)를 써줘야 함 
 		User newUser = userRepository.save(user);
 		System.out.println("newUser : " + newUser);
-		
 	}
+*/
 
+//	@Test
+	public void create() {
+		String account = "Test01";
+		String password = "Test01";
+		String status = "REGISTERED";
+		String email = "Test01@gmail.com";
+		String phoneNumber = "010-1111-2222";
+		LocalDateTime registeredAt = LocalDateTime.now();
+		LocalDateTime createdAt = LocalDateTime.now();
+		String createdBy = "AdminServer";
+		
+		User user = new User();
+		user.setAccount(account);
+		user.setPassword(password);
+		user.setStatus(status);
+		user.setEmail(email);
+		user.setPhoneNumber(phoneNumber);
+		user.setRegisteredAt(registeredAt);
+		user.setCreatedAt(createdAt);
+		user.setCreatedBy(createdBy);
+		
+		User newUser = userRepository.save(user);
+		Assert.assertNotNull(newUser);
+	}
+		
+	
 /*	
 	@Test
 	public User read(@RequestParam Long id) {
@@ -56,10 +84,11 @@ public class UserRepositoryTest extends StudyApplicationTests{
 		return user.get();
 	}
 */
+
+	/*		
 	@Test
 	@Transactional
 	public void read() {
-		
 		// SELECT * FROM user WHERE id = ? 
 //		Optional<User> user = userRepository.findById(7L);
 		Optional<User> user = userRepository.findByAccount("TestUser01");
@@ -77,6 +106,16 @@ public class UserRepositoryTest extends StudyApplicationTests{
 			});
 		});
 	}
+*/
+	
+	@Test
+	public void read() {
+		User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
+		Assert.assertNotNull(user);
+	}
+	
+	
+	
 	
 //	@Test
 	public void update() {
@@ -91,6 +130,7 @@ public class UserRepositoryTest extends StudyApplicationTests{
 			
 		});
 	}
+	
 	
 //	@Test
 	@Transactional // 삭제 되지 않고 원래상태로 rollback 시켜줌 
