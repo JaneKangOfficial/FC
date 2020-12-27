@@ -8,16 +8,19 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor // 모든 생성자 
 @NoArgsConstructor // 기본 생성자 
 @Entity
+@ToString(exclude = {"orderDetailList", "partner"})
 
 public class Item {
 
@@ -49,13 +52,19 @@ public class Item {
 	
 	private String updatedBy;
 	
-	private Long partnerId;
+	
+//	private Long partnerId;
+	// Item : Partner -> N : 1
+	@ManyToOne
+	private Partner partner;
 	
 	
+	// Item : OrderDetail -> 1 : N 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+	private List<OrderDetail> orderDetailList;
+
 	
-	
-	
-	/*	
+/*	
 	// 연관관계 설정 -> Item : OrderDetail -> 1 : N
 	// mappedBy = "item" 에서 item 은 OrderDetail.java 의 변수명인 item 과 동일해야함  
 	
@@ -67,10 +76,8 @@ public class Item {
 	// item_id = order_detail.item_id
 	// user_id = order_detail.user_id
 	// where item.id = ?
+ */
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
-	private List<OrderDetail> orderDetailList;
-*/
 	
 	
 }

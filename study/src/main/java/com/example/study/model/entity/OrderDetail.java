@@ -19,7 +19,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @Entity // order_detail
 // Lombok에서 ToString이 자동으로 됨 
-//@ToString(exclude = {"user", "item"}) // user와 item이 서로 연관관계 설정이 돼있으면 overflow error가 발생함 -> 제외시켜줘야함 
+//@ToString(exclude = {"user", "item"}) // user와 item이 서로 연관관계 설정이 돼있으면 overflow error가 발생함 -> 제외시켜줘야함
+@ToString(exclude = {"orderGroupe", "item"})
 public class OrderDetail {
 
 	@Id
@@ -42,10 +43,15 @@ public class OrderDetail {
 	
 	private String updatedBy;
 	
-	private Long itemId;
+//	private Long itemId;
+	// OrderDetail : Item -> N : 1
+	@ManyToOne
+	private Item item;
 	
-	private Long orderGroupId;
-	
+//	private Long orderGroupId;	// -> private OrderGroup orderGroup
+	// OrderDetail : OrderGroup -> N : 1
+	@ManyToOne
+	private OrderGroup orderGroup;
 	
 	
 	
@@ -62,5 +68,8 @@ public class OrderDetail {
 	private Item item; // item_id
 //	private Long itemId; // 연관관계 설정에서는 Item item 으로 사용한다 
 */
+	
+	
+
 
 }

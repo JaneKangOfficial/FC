@@ -12,7 +12,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.study.StudyApplicationTests;
-import com.example.study.model.entity.Item;
 import com.example.study.model.entity.User;
 
 @WebAppConfiguration
@@ -109,8 +108,36 @@ public class UserRepositoryTest extends StudyApplicationTests{
 */
 	
 	@Test
+	@Transactional
 	public void read() {
 		User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
+		
+		if(user != null) {
+			user.getOrderGroupList().stream().forEach(orderGroup -> {
+				
+				System.out.println("----------------------주문묶음----------------------");
+				System.out.println("수령인 : " + orderGroup.getRevName());
+				System.out.println("수령지 : " + orderGroup.getRevAddress());
+				System.out.println("총금액 : " + orderGroup.getTotalPrice());
+				System.out.println("총수량 : " + orderGroup.getTotalQuantity());
+
+				System.out.println("----------------------주문상세----------------------");
+				
+				orderGroup.getOrderDetailList().forEach(orderDetail -> {
+					System.out.println("파트너사 이름 : " + orderDetail.getItem().getPartner().getName());
+					System.out.println("파트너사 카테고리 : " + orderDetail.getItem().getPartner().getCategory().getTitle());
+					System.out.println("주문 상품 : " + orderDetail.getItem().getName());
+					System.out.println("고개센터 번호 : " + orderDetail.getItem().getPartner().getCallCenter());
+					System.out.println("주문의 상태 : " + orderDetail.getStatus());
+					System.out.println("도착예정일자 : " + orderDetail.getArrivalDate());
+					
+				});
+			
+				System.out.println("----------------------------------------------------");
+				
+			});
+		}
+		
 		Assert.assertNotNull(user);
 	}
 	

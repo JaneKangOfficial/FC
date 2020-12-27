@@ -1,20 +1,26 @@
 package com.example.study.model.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
+@ToString(exclude = {"itemList", "category"})
 public class Partner {
 	
 	@Id
@@ -47,6 +53,14 @@ public class Partner {
 	
 	private String updatedBy;
 	
-	private Long categoryId;
+	
+//	private Long categoryId;
+	// Partner : Category -> N : 1
+	@ManyToOne
+	private Category category;
+	
+	// Partner : Item -> 1 : N
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "partner")
+	private List<Item> itemList;
 
 }

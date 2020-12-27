@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 // import 안되고 error 나오면 프로젝트명에서 오른쪽 클릭 -> gradle -> gradle refresh 눌러서 build.gradle에 적어둔 라이브러리 다운
 // DB와 매칭
@@ -22,6 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor // 기본생성자 
 @Entity // == table
 //@Table(name="user")
+@ToString(exclude = {"orderGroup"})
 public class User {
 
 	@Id // Index primary key를 명시 
@@ -57,4 +59,7 @@ public class User {
 	private List<OrderDetail> orderDetailList;
 */
 	
+	// User : OrderGroup -> 1 : N 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private List<OrderGroup> orderGroupList;
 }
