@@ -4,16 +4,25 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 // import 안되고 error 나오면 프로젝트명에서 오른쪽 클릭 -> gradle -> gradle refresh 눌러서 build.gradle에 적어둔 라이브러리 다운
 // DB와 매칭
@@ -24,6 +33,9 @@ import lombok.ToString;
 @Entity // == table
 //@Table(name="user")
 @ToString(exclude = {"orderGroup"})
+@EntityListeners(AuditingEntityListener.class)	// 이 감시자에 의해 @CreatedBy, @LastModifiedBy가 LoginUserAuditorAware.java의 설정값으로 설정됨
+@Builder	// 생성자 만들지 않고 객체 생성 -> UserRepositoryTest.java create()
+@Accessors(chain = true)	// 생성자 만들지 않고 객체 수정 -> UserRepositoryTest.java read()
 public class User {
 
 	@Id // Index primary key를 명시 
@@ -44,12 +56,16 @@ public class User {
 
 	private LocalDateTime unregisteredAt;
 	
+	@CreatedDate
 	private LocalDateTime createdAt;
 	
+	@CreatedBy
 	private String createdBy;
 	
+	@LastModifiedDate
 	private LocalDateTime updatedAt;
 	
+	@LastModifiedBy
 	private String updatedBy;
 	
 /*
