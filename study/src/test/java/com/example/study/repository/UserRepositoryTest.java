@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.study.StudyApplicationTests;
 import com.example.study.model.entity.User;
+import com.example.study.model.enumclass.UserStatus;
 
 import lombok.experimental.Accessors;
 
@@ -60,7 +61,7 @@ public class UserRepositoryTest extends StudyApplicationTests{
 		User user = new User();
 		user.setAccount(account);
 		user.setPassword(password);
-		user.setStatus(status);
+//		user.setStatus(status);
 		user.setEmail(email);
 		user.setPhoneNumber(phoneNumber);
 		user.setRegisteredAt(registeredAt);
@@ -71,7 +72,7 @@ public class UserRepositoryTest extends StudyApplicationTests{
 		User u = User.builder()
 				.account(account)
 				.password(password)
-				.status(status)
+//				.status(status)
 				.email(email)
 				.build();
 		
@@ -126,8 +127,8 @@ public class UserRepositoryTest extends StudyApplicationTests{
 		// User.java에서 @Accessors(chain = true)이 있으면 생성자 만들지 않고도 수정 가능 
 		user
 			.setEmail("")
-			.setPhoneNumber("")
-			.setStatus("");
+			.setPhoneNumber("");
+//			.setStatus("");
 		
 		User u = new User().setAccount("").setEmail("").setPassword("");
 		/////////////////////////////////////////////////////////////////////////////////

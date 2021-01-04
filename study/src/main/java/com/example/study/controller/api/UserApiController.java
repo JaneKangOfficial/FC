@@ -1,5 +1,7 @@
 package com.example.study.controller.api;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.study.controller.CrudController;
 import com.example.study.ifs.CrudInterface;
 import com.example.study.model.network.Header;
 import com.example.study.model.network.request.UserApiRequest;
@@ -21,6 +24,19 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j	// Simple logging facade for Java -> log.info(); 사용 가능 
 @RestController
 @RequestMapping("/api/user")
+public class UserApiController extends CrudController<UserApiRequest, UserApiResponse>{
+
+	@Autowired
+	private UserApiLogicService userApilogicService;
+	
+	@PostConstruct
+	public void init() {
+		this.baseService = userApilogicService;
+	}
+	
+}
+
+/*
 public class UserApiController implements CrudInterface<UserApiRequest, UserApiResponse>{
 
 	@Autowired
@@ -53,8 +69,5 @@ public class UserApiController implements CrudInterface<UserApiRequest, UserApiR
 		log.info("delete : {}", id);
 		return userApiLogicService.delete(id);
 	}
-
-
-	
-	
 }
+*/

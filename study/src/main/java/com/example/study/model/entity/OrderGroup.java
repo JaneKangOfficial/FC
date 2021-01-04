@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +20,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.example.study.model.enumclass.OrderType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,7 +46,8 @@ public class OrderGroup {
 	
 	private String status;
 	
-	private String orderType; // 주문의 형태 (일괄, 개별)
+	@Enumerated(EnumType.STRING)
+	private OrderType orderType; // 주문의 형태 (일괄, 개별)
 	
 	private String revAddress;
 	

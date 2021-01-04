@@ -3,8 +3,6 @@ package com.example.study.model.network.response;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.example.study.model.enumclass.OrderType;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,28 +12,25 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderGroupApiResponse {
+public class OrderDetailApiResponse {
 
 	private Long id;
 	
 	private String status;
 	
-	private OrderType orderType;
+	private LocalDateTime arrivalDate;
 	
-	private String revAddress;
-	
-	private String revName;
-	
-	private String paymentType;
+	private int quantity;
 	
 	private BigDecimal totalPrice;
 	
-	private Integer totalQuantity;
+	private LocalDateTime createdAt;
 	
-	private LocalDateTime orderAt;
+	private LocalDateTime updatedAt;
 	
-	private LocalDateTime arrivalDate;
+	private Long orderGroupId;
 	
-	private Long userId;
+	private Long itemId;
+	
 	
 }
