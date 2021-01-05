@@ -1,5 +1,7 @@
 package com.example.study.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,10 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.study.ifs.CrudInterface;
 import com.example.study.model.network.Header;
+import com.example.study.service.BaseService;
 
-public abstract class CrudController<Req, Res> implements CrudInterface<Req, Res>{
+@Component
+public abstract class CrudController<Req, Res, Entity> implements CrudInterface<Req, Res>{
 
-	protected CrudInterface<Req, Res> baseService;
+//	protected CrudInterface<Req, Res> baseService;
+	@Autowired(required = false)
+	protected BaseService<Req, Res, Entity> baseService;
 	
 	@Override
 	@PostMapping("")

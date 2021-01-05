@@ -51,7 +51,7 @@ public class UserRepositoryTest extends StudyApplicationTests{
 	public void create() {
 		String account = "Test03";
 		String password = "Test03";
-		String status = "REGISTERED";
+		UserStatus status = UserStatus.REGISTERED;
 		String email = "Test03@gmail.com";
 		String phoneNumber = "010-1111-3333";
 		LocalDateTime registeredAt = LocalDateTime.now();
@@ -61,7 +61,7 @@ public class UserRepositoryTest extends StudyApplicationTests{
 		User user = new User();
 		user.setAccount(account);
 		user.setPassword(password);
-//		user.setStatus(status);
+		user.setStatus(status);
 		user.setEmail(email);
 		user.setPhoneNumber(phoneNumber);
 		user.setRegisteredAt(registeredAt);
@@ -72,7 +72,7 @@ public class UserRepositoryTest extends StudyApplicationTests{
 		User u = User.builder()
 				.account(account)
 				.password(password)
-//				.status(status)
+				.status(status)
 				.email(email)
 				.build();
 		

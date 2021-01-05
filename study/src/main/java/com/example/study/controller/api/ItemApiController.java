@@ -1,28 +1,18 @@
 package com.example.study.controller.api;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.study.controller.CrudController;
-import com.example.study.ifs.CrudInterface;
-import com.example.study.model.network.Header;
+import com.example.study.model.entity.Item;
 import com.example.study.model.network.request.ItemApiRequest;
 import com.example.study.model.network.response.ItemApiResponse;
-import com.example.study.service.ItemApiLogicService;
 
 @RestController
 @RequestMapping("/api/item")
-public class ItemApiController extends CrudController<ItemApiRequest, ItemApiResponse> {
+public class ItemApiController extends CrudController<ItemApiRequest, ItemApiResponse, Item> {
 
+/*
 	@Autowired
 	private ItemApiLogicService itemApilogicService;
 
@@ -30,6 +20,7 @@ public class ItemApiController extends CrudController<ItemApiRequest, ItemApiRes
 	public void init() {
 		this.baseService = itemApilogicService;
 	}
+*/
 }
 
 

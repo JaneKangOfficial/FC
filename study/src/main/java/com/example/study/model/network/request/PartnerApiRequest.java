@@ -1,6 +1,5 @@
 package com.example.study.model.network.request;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -12,21 +11,29 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderDetailApiRequest {
+public class PartnerApiRequest {
 
 	private Long id;
 	
+	private String name;
+	
 	private String status;
 	
-	private LocalDateTime arrivalDate;
+	private String address;
 	
-	private int quantity;
+	private String callConter;
 	
-	private BigDecimal totalPrice;
+	private String partnerNumber;
 	
-	private Long orderGroupId;
+	private String businessNumber;
 	
-	private Long itemId;
+	private String ceoName;
+	
+	private LocalDateTime registeredAt;
+
+	private LocalDateTime unregisteredAt;
+	
+	private Long categoryId;
 	
 	
 }

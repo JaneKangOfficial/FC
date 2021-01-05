@@ -75,8 +75,6 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 				.arrivalDate(orderDetail.getArrivalDate())
 				.quantity(orderDetail.getQuantity())
 				.totalPrice(orderDetail.getTotalPrice())
-				.createdAt(orderDetail.getCreatedAt())
-				.updatedAt(orderDetail.getUpdatedAt())
 				.orderGroupId(orderDetail.getOrderGroup().getId())
 				.itemId(orderDetail.getItem().getId())
 				.build();
