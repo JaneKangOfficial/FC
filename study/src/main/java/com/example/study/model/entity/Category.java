@@ -56,6 +56,7 @@ public class Category {
 	
 	
 	// Category : Partner -> 1 : N
+//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "category")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
 	private List<Partner> parterList;
 }

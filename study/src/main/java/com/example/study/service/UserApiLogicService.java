@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,27 +23,25 @@ import com.example.study.model.network.response.ItemApiResponse;
 import com.example.study.model.network.response.OrderGroupApiResponse;
 import com.example.study.model.network.response.UserApiResponse;
 import com.example.study.model.network.response.UserOrderInfoApiResponse;
-import com.example.study.repository.UserRepository;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class UserApiLogicService implements CrudInterface<UserApiRequest, UserApiResponse>{
+@RequiredArgsConstructor
+//public class UserApiLogicService implements CrudInterface<UserApiRequest, UserApiResponse>{
+public class UserApiLogicService extends BaseService<UserApiRequest, UserApiResponse, User>{
 
-	@Autowired
-	private UserRepository userRepository;
-	
-	// 1. request data
-	// 2. user 생성 
-	// 3. 생성된 데이터 -> UserApiResponse return 
-	
 	@Autowired
 	private OrderGroupApiLogicService orderGroupApiLogicService;
 	
 	@Autowired
 	private ItemApiLogicService itemApiLogicService;
 	
+	// 1. request data
+	// 2. user 생성 
+	// 3. 생성된 데이터 -> UserApiResponse return 
 	
 	@Override
 	public Header<UserApiResponse> create(Header<UserApiRequest> request) {
@@ -58,7 +58,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 				.email(userApiRequest.getEmail())
 				.registeredAt(LocalDateTime.now())
 				.build();
-		User newUser = userRepository.save(user);
+		User newUser = baseRepository.save(user);
 		
 		// 3. 생성된 데이터 -> UserApiResponse return 
 //		return response(newUser);
@@ -71,7 +71,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 	public Header<UserApiResponse> read(Long id) {
 
 		// id로 repository getOne, getById
-		Optional<User> optional = userRepository.findById(id);
+		Optional<User> optional = baseRepository.findById(id);
 		
 		// user로 userApiResponse return
 		return optional
@@ -93,7 +93,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 		UserApiRequest userApiRequest = request.getData();
 		
 		// 2. id -> user 데이터를 찾고
-		Optional<User> optional = userRepository.findById(userApiRequest.getId());
+		Optional<User> optional = baseRepository.findById(userApiRequest.getId());
 		
 		return optional.map(user -> {
 		// 3. data -> update
@@ -107,7 +107,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 				;
 			return user;
 		})
-		.map(user -> userRepository.save(user))				// 3. update -> updateUser
+		.map(user -> baseRepository.save(user))				// 3. update -> updateUser
 		.map(updateUser -> response(updateUser))			// 4. userApiResponse
 		.map(Header::OK)
 		.orElseGet(() -> Header.ERROR("데이터 없음"));
@@ -118,19 +118,42 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 	public Header delete(Long id) {
 		
 		// 1. id -> repository -> user
-		Optional<User> optional = userRepository.findById(id);
+		Optional<User> optional = baseRepository.findById(id);
 		
 		// 2. repository -> delete
 		return optional.map(user -> {
-			userRepository.delete(user);
+			baseRepository.delete(user);
 			return Header.OK();
 		})
 		.orElseGet(() -> Header.ERROR("데이터 없음"));
 		
 	}
+
+	public Header<List<UserApiResponse>> search(Pageable pageable) {
+		
+//		log.info("{}", pageable);
+//		Page<User> users = (Page<User>) userRepository.findAll((Sort) pageable);
+		Page<User> users = baseRepository.findAll(pageable);
+		
+		List<UserApiResponse> userApiResponseList = users.stream()
+				.map(user -> response(user))
+				.collect(Collectors.toList());
+		
+		// List<UserApiResponse>
+		// Header<List<UserApiResponse>>
+		
+		Pagination pagination = Pagination.builder()
+				.totalPages(users.getTotalPages())
+				.totalElements(users.getTotalElements())
+				.currentPage(users.getNumber())
+				.currnetElements(users.getNumberOfElements())
+				.build();
+		
+		return Header.OK(userApiResponseList, pagination);
+	}
 	
 	private UserApiResponse response(User user) {
-	
+		
 //	private Header<UserApiResponse> response(User user) {
 		// 3. user 객체로 userApiResponse를 만들어 return 
 		
@@ -149,36 +172,11 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 //		return Header.OK(userApiResponse);
 		return userApiResponse;
 	}
-
-	public Header<List<UserApiResponse>> search(Pageable pageable) {
-		
-//		log.info("{}", pageable);
-//		Page<User> users = (Page<User>) userRepository.findAll((Sort) pageable);
-		Page<User> users = userRepository.findAll(pageable);
-		
-		List<UserApiResponse> userApiResponseList = users.stream()
-				.map(user -> response(user))
-				.collect(Collectors.toList());
-		
-		// List<UserApiResponse>
-		// Header<List<UserApiResponse>>
-		
-		Pagination pagination = Pagination.builder()
-				.totalPages(users.getTotalPages())
-				.totalElements(users.getTotalElements())
-				.currentPage(users.getNumber())
-				.currnetElements(users.getNumberOfElements())
-				.build();
-		
-		
-		return Header.OK(userApiResponseList, pagination);
-	}
-	
 	
 	public Header<UserOrderInfoApiResponse> orderInfo(Long id) {
 		
 		// user
-		User user = userRepository.getOne(id);
+		User user = baseRepository.getOne(id);
 		UserApiResponse userApiResponse = response(user);
 		
 		// orderGroup

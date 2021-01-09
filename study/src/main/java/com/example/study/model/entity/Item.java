@@ -81,6 +81,7 @@ public class Item {
 	
 	
 	// Item : OrderDetail -> 1 : N 
+//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "item")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
 	private List<OrderDetail> orderDetailList;
 

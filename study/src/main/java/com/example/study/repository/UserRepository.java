@@ -25,7 +25,5 @@ public interface UserRepository extends JpaRepository<User,  Long>{
 	
 	User findFirstByPhoneNumberOrderByIdDesc(String phoneNumber);
 
-//	Page<User> findAll(Pageable pageable);
-	
 	
 }

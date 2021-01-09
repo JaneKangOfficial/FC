@@ -81,6 +81,7 @@ public class User {
 */
 	
 	// User : OrderGroup -> 1 : N 
+//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<OrderGroup> orderGroupList;
 }

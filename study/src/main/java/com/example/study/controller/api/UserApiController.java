@@ -15,20 +15,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.study.ifs.CrudInterface;
+import com.example.study.controller.CrudController;
+import com.example.study.model.entity.User;
 import com.example.study.model.network.Header;
 import com.example.study.model.network.request.UserApiRequest;
 import com.example.study.model.network.response.UserApiResponse;
 import com.example.study.model.network.response.UserOrderInfoApiResponse;
 import com.example.study.service.UserApiLogicService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j	// Simple logging facade for Java -> log.info(); 사용 가능 
 @RestController
 @RequestMapping("/api/user")
-//public class UserApiController extends CrudController<UserApiRequest, UserApiResponse, User>{
+@RequiredArgsConstructor
 
+public class UserApiController extends CrudController<UserApiRequest, UserApiResponse, User>{
 
 	
 /*	
@@ -43,7 +46,7 @@ import lombok.extern.slf4j.Slf4j;
 */	
 
 ///*
-public class UserApiController implements CrudInterface<UserApiRequest, UserApiResponse>{
+//public class UserApiController implements CrudInterface<UserApiRequest, UserApiResponse>{
  
 	@Autowired
 	private UserApiLogicService userApiLogicService;
@@ -61,6 +64,7 @@ public class UserApiController implements CrudInterface<UserApiRequest, UserApiR
 	}
 	
 
+/*	
 	@Override
 	@PostMapping("")	// /api/user
 	public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> request) {
@@ -88,5 +92,5 @@ public class UserApiController implements CrudInterface<UserApiRequest, UserApiR
 		log.info("delete : {}", id);
 		return userApiLogicService.delete(id);
 	}
+ */
 }
-//*/

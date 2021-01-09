@@ -82,6 +82,7 @@ public class OrderGroup {
 	private User user;
 	
 	// OrderGroup : OrderDetail -> 1 : N
+//	@OneToMany(fetch = FetchType.EAGER, mappedBy = "orderGroup")
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orderGroup")
 	private List<OrderDetail> orderDetailList;
 	
