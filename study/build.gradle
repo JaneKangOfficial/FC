@@ -8,7 +8,6 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
-
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -35,9 +34,9 @@ dependencies {
 	compile ('mysql:mysql-connector-java')
 //    runtimeOnly 'mysql:mysql-connector-java'
 
-// 404 ERROR
-compile('org.apache.tomcat.embed:tomcat-embed-jasper')
-compile('javax.servlet:jstl:1.2')
+	// 404 ERROR
+	compile('org.apache.tomcat.embed:tomcat-embed-jasper')
+	compile('javax.servlet:jstl:1.2')
 
 
 	
